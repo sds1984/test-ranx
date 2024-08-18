@@ -23,6 +23,7 @@ $news = Iblock\Elements\ElementNewsTable::getList(array(
 		'ID',
 		'DETAIL_PAGE_URL' => 'IBLOCK.DETAIL_PAGE_URL',
 		'NAME',
+		'CODE',
 		'PREVIEW_PICTURE',
 		'IBLOCK_SECTION_ID',
 		'DATE_CREATE',
@@ -62,7 +63,7 @@ foreach ($arElements as $element) {
 	$date->setTimestamp(strtotime($element['DATE_CREATE']));
 	$result[] = array(
 		'ID' => $element['ID'],
-		'URL' => CIBlock::ReplaceDetailUrl($element['DETAIL_PAGE_URL'], $element, false, 'E') . $element['ID'],
+		'URL' => CIBlock::ReplaceDetailUrl($element['DETAIL_PAGE_URL'], $element, false, 'E'),
 		'IMAGE' => $element['PREVIEW_PICTURE'],
 		'NAME' => $element['NAME'],
 		'SECTION_NAME' => $arSections[$element['IBLOCK_SECTION_ID']],
