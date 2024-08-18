@@ -4,7 +4,6 @@ require_once($_SERVER['DOCUMENT_ROOT'] . "/bitrix/modules/main/include/prolog_be
 use Bitrix\Iblock;
 use Bitrix\Iblock\SectionTable;
 use Bitrix\Main\Loader;
-use \Bitrix\Main\Data\Cache;
 
 Loader::IncludeModule("iblock");
 
@@ -15,6 +14,9 @@ $arSectionIds = [];
 $result = [];
 $page = 0;
 $pageSize = 10;
+$date = new DateTime();
+$intlFormatter = new IntlDateFormatter('ru_RU', IntlDateFormatter::SHORT, IntlDateFormatter::SHORT);
+$intlFormatter->setPattern('d MMMM Y H:mm');
 
 $news = Iblock\Elements\ElementNewsTable::getList(array(
 	'select' => array(
@@ -57,12 +59,7 @@ while ($section = $sections->fetch()) {
 }
 
 foreach ($arElements as $element) {
-
-	$date = new DateTime();
 	$date->setTimestamp(strtotime($element['DATE_CREATE']));
-	$intlFormatter = new IntlDateFormatter('ru_RU', IntlDateFormatter::SHORT, IntlDateFormatter::SHORT);
-	$intlFormatter->setPattern('d MMMM Y H:mm');
-
 	$result[] = array(
 		'ID' => $element['ID'],
 		'URL' => CIBlock::ReplaceDetailUrl($element['DETAIL_PAGE_URL'], $element, false, 'E') . $element['ID'],
